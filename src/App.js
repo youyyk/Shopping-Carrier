@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react'
+import { firebase } from './services/firebase'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// const fetchData = async () => {
+//   const snapshot = await firebase.database().ref('/').once('value')
+//   const data = snapshot.val()
+//   console.log(data)
+// }
+
+const fetchData = async () => {
+  firebase.database().ref('/').on('value', snapshot => {
+    const data = snapshot.val()
+    console.log(data)
+  })
 }
 
-export default App;
+export const App = () => {
+  useEffect(() => {
+    fetchData()
+  }, [])
+  return <div> Hello APP </div>
+}
