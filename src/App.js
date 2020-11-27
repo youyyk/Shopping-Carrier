@@ -1,22 +1,33 @@
 import { useEffect } from 'react'
 import { firebase } from './services/firebase'
-
-// const fetchData = async () => {
+import * as readData from './services/readData'
+import * as accountList from './data/accountList'
+// const fetchDataAccount = async () => {
 //   const snapshot = await firebase.database().ref('/').once('value')
 //   const data = snapshot.val()
 //   console.log(data)
 // }
 
-const fetchData = async () => {
-  firebase.database().ref('/').on('value', snapshot => {
+const fetchDataAccount = async () => {
+  firebase.database().ref('/Account').on('value', snapshot => {
     const data = snapshot.val()
-    console.log(data)
+    readData.readFile(data)
+    accountList.updateAccount(data)
+    accountList.printAccountList()
+  })
+}
+
+const fetchDataEvent = async () => {
+  firebase.database().ref('/Event').on('value', snapshot => {
+    const data = snapshot.val()
+    readData.readFile(data)
   })
 }
 
 export const App = () => {
   useEffect(() => {
-    fetchData()
+    fetchDataAccount()
+    fetchDataEvent()
   }, [])
   return <div> Hello APP </div>
 }

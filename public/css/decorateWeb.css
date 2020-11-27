@@ -1,3 +1,4 @@
 body {
     background-color: rgb(0, 255, 238);
+    -webkit-text-size-adjust: none;
 }
